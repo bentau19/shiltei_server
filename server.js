@@ -64,11 +64,14 @@ app.post('/add-product',(req,res)=>{
 
 
 app.post('/delete-product',(req,res)=>{
-    Product.deleteOne({title:req.body.params.title}).then(()=>{
+    if (req.body.params._id!=0){
+    Product.deleteOne({_id:req.body.params._id}).then(()=>{
         res.send("success!!")
     }).catch((err)=>{
     res.send(err)}
-    )
+    )}else{
+        res.send("refresh the page!!")
+    }
 })
 
 
