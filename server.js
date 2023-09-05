@@ -59,12 +59,34 @@ app.post('/add-product',(req,res)=>{
     });}else{
         res.send("try to login again!!")
     }
-    
 })
 
 
+app.post('/update-product',(req,res)=>{
+    if (req.body.params.pass ==pass){
+    const product = new Product({
+        title:req.body.params.title,
+        makat:req.body.params.makat,
+        price:req.body.params.price,
+        picture:req.body.params.picture,
+        highlight:req.body.params.highlight,
+        tags:req.body.params.tags,
+        sellCount:0
+    });
+    product.save()
+    .then((result)=>{
+        Product.deleteOne({_id:req.body.params._id}).then((r)=>
+        {res.send(result)})
+    }).catch((err)=>{
+        console.log(err);
+    });}else{
+        res.send("try to login again!!")
+    }
+})
+
 app.post('/delete-product',(req,res)=>{
     if (req.body.params._id!=0){
+    console.log(req.body.params_id);
     Product.deleteOne({_id:req.body.params._id}).then(()=>{
         res.send("success!!")
     }).catch((err)=>{
