@@ -75,6 +75,7 @@ app.post('/update-product',(req,res)=>{
     });
     product.save()
     .then((result)=>{
+        console.log("delete!!");
         Product.deleteOne({_id:req.body.params._id}).then((r)=>
         {res.send(result)})
     }).catch((err)=>{
@@ -85,6 +86,7 @@ app.post('/update-product',(req,res)=>{
 })
 
 app.post('/delete-product',(req,res)=>{
+    if (req.body.params.pass ==pass){
     if (req.body.params._id!=0){
     console.log(req.body.params_id);
     Product.deleteOne({_id:req.body.params._id}).then(()=>{
@@ -93,7 +95,7 @@ app.post('/delete-product',(req,res)=>{
     res.send(err)}
     )}else{
         res.send("refresh the page!!")
-    }
+    }}
 })
 
 
