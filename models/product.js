@@ -6,6 +6,9 @@ const productSchema = new Schema({
         type:String,
         required:true
     },
+    size:{
+        type:String
+    },
     makat:{
         type:String,
         required:true

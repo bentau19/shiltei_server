@@ -45,6 +45,7 @@ app.post('/add-product',(req,res)=>{
     const product = new Product({
         title:req.body.params.title,
         makat:req.body.params.makat,
+        size:req.body.params.size,
         price:req.body.params.price,
         picture:req.body.params.picture,
         highlight:req.body.params.highlight,
@@ -67,6 +68,7 @@ app.post('/update-product',(req,res)=>{
     const product = new Product({
         title:req.body.params.title,
         makat:req.body.params.makat,
+        size:req.body.params.size,
         price:req.body.params.price,
         picture:req.body.params.picture,
         highlight:req.body.params.highlight,
