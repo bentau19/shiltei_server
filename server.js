@@ -16,6 +16,23 @@ const corsOptions ={
    credentials:true,            //access-control-allow-credentials:true
    optionSuccessStatus:200,
 }
+var nodemailer = require('nodemailer');
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'shilteihatzafon@gmail.com',
+    pass: 'Shiltei0544221414'
+  }
+});
+
+var mailOptions = {
+    from: 'shilteihatzafon@gmail.com',
+    to: 'bentau19@gmail.com',
+    subject: 'Sending Email using Node.js',
+    text: 'That was easy!'
+  };
+  
 
 app.use(cors(corsOptions)) 
 async function connect(){
@@ -62,6 +79,16 @@ app.post('/add-product',(req,res)=>{
     }
 })
 
+
+app.post('/send-mail',(req,res)=>{
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
+})
 
 app.post('/update-product',(req,res)=>{
     if (req.body.params.pass ==pass){
