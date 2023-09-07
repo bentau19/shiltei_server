@@ -13,8 +13,17 @@ const corsOptions ={
 router.use(cors(corsOptions))
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
-router.post('/search-product',(req,res)=>{
+router.post('/search-product-byTitle',(req,res)=>{
     Product.find({ title: { $regex: req.body.params.title, $options: "i" } }).limit(3)
+    .then(docs => {
+        res.send(docs)
+    })
+    .catch(err => {
+        res.send(err);
+    });
+})
+router.post('/search-product-byId',(req,res)=>{
+    Product.findById(req.body.id)
     .then(docs => {
         res.send(docs)
     })
