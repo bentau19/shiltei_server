@@ -84,7 +84,6 @@ router.post('/update-product',(req,res)=>{
 router.post('/delete-product',(req,res)=>{
     if (req.body.params.pass ==global.pass){
     if (req.body.params._id!=0){
-    console.log(req.body.params_id);
     Product.deleteOne({_id:req.body.params._id}).then(()=>{
         res.send("success!!")
     }).catch((err)=>{
