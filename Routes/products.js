@@ -14,7 +14,7 @@ router.use(cors(corsOptions))
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 router.post('/search-product-byTitle',(req,res)=>{
-    Product.find({ title: { $regex: req.body.params.title, $options: "i" } }).limit(3)
+    Product.find({ title: { $regex: req.body.params.title, $options: "i" } })
     .then(docs => {
         res.send(docs)
     })
@@ -55,31 +55,31 @@ router.post('/add-product',(req,res)=>{
 })
 
 
-
-
-router.post('/update-product',(req,res)=>{
-    if (req.body.params.pass ==global.pass){
-    const product = new Product({
-        title:req.body.params.title,
-        makat:req.body.params.makat,
-        size:req.body.params.size,
-        price:req.body.params.price,
-        picture:req.body.params.picture,
-        highlight:req.body.params.highlight,
-        tags:req.body.params.tags,
-        sellCount:0
-    });
-    product.save()
-    .then((result)=>{
-        console.log("delete!!");
-        Product.deleteOne({_id:req.body.params._id}).then((r)=>
-        {res.send(result)})
-    }).catch((err)=>{
-        console.log(err);
-    });}else{
-        res.send("try to login again!!")
+router.post('/update-product', async (req, res) => {
+    try{
+    if (req.body.params.pass === global.pass) {
+        const { _id, title, makat, size, price, picture, highlight, tags } = req.body.params;
+        try {
+            const updatedProduct = await Product.findByIdAndUpdate(_id, {
+                title,
+                makat,
+                size,
+                price,
+                picture,
+                highlight,
+                tags
+            });
+            return res.send('Successfully saved.');
+        } catch (err) {
+            return res.status(500).send({ error: err.message });
+        }
+    } else {
+        return res.status(403).send('Unauthorized');
+    }}
+    catch (err) {
+        return res.status(500).send({ error: err.message });
     }
-})
+});
 
 router.post('/delete-product',(req,res)=>{
     if (req.body.params.pass ==global.pass){
