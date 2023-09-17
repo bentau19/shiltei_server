@@ -8,7 +8,11 @@ const corsOptions ={
    credentials:true,            //access-control-allow-credentials:true
    optionSuccessStatus:200,
 }
+var bodyParser = require('body-parser')
+router.use(bodyParser.json());
+router.use(bodyParser.urlencoded({ extended: true }));
 router.use(cors(corsOptions))
+
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -17,21 +21,30 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-const mailOptions = {
-    from: 'shilteiHatzafon@gmail.com',
-    to: 'bentau19@gmail.com',
-    subject: 'Sending Email using Node.js',
-    text: 'That was easy!'
-  };
   
   router.post('/send-mail',(req,res)=>{
-    transporter.sendMail(mailOptions, function(error, info){
+    // secretKey:"itIsMe!",
+    // _id:res.data._id,
+    // tradeNum:res.data.tradeNum,
+    // name:res.data.name,
+    // email:res.data.email,
+    console.log(req.body)
+    const { _id,tradeNum,secretKey,name,email} = req.body.params;
+    if(secretKey==="itIsMe!"){
+    transporter.sendMail({
+      from: 'shilteiHatzafon@gmail.com',
+      to: email,
+      subject:tradeNum + 'קבלה למספר עסקה ',
+      text:"שלום "+name+'\n שמחים שרכשת אצלנו!!! \n מצ"ב לינק לקבלה דיגיטלית! \n '+"https://shiltei.vercel.app/"+_id+"/"+tradeNum+"\n המשך קניה מהנה ונשמח לראותך שוב!!"
+    }, function(error, info){
         if (error) {
           console.log(error);
         } else {
           console.log('Email sent: ' + info.response);
         }
-      });
+      });}else{
+        res.send("this is not you!!")
+      }
 })
 
 module.exports = router;
