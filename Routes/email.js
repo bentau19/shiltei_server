@@ -35,7 +35,7 @@ const transporter = nodemailer.createTransport({
       from: 'shilteiHatzafon@gmail.com',
       to: email,
       subject:tradeNum + 'קבלה למספר עסקה ',
-      text:"שלום "+name+'\n שמחים שרכשת אצלנו!!! \n מצ"ב לינק לקבלה דיגיטלית! \n '+"https://shiltei.vercel.app/"+_id+"/"+tradeNum+"\n המשך קניה מהנה ונשמח לראותך שוב!!"
+      text:"שלום "+name+'\n שמחים שרכשת אצלנו!!! \n מצ"ב לינק לקבלה דיגיטלית! \n '+"https://shiltei.vercel.app/accaptance/"+_id+"/"+tradeNum+"\n המשך קניה מהנה ונשמח לראותך שוב!!"
     }, function(error, info){
         if (error) {
           console.log(error);
