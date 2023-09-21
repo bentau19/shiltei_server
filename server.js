@@ -30,9 +30,12 @@ app.get('/muzar', (req, res) => {
 async function connect(){
     try{
         await mongoose.connect(uri);
-        app.listen(3000,()=>{
-            console.log('server on port 8000')
-        })
+        // app.listen(3000,()=>{
+        //     console.log('server on port 8000')
+        // })
+        app.listen(process.env.PORT || 3000, () => {
+            console.log(`Server running on port ${process.env.PORT || 3000}`);
+        });
         console.log("Connected to mongoDB");
     }catch(e){
         console.log(e);
