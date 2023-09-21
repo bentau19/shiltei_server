@@ -30,7 +30,7 @@ app.get('/muzar', (req, res) => {
 async function connect(){
     try{
         await mongoose.connect(uri);
-        app.listen(8000,()=>{
+        app.listen(3000,()=>{
             console.log('server on port 8000')
         })
         console.log("Connected to mongoDB");
