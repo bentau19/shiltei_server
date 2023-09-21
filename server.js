@@ -22,6 +22,11 @@ const corsOptions ={
    optionSuccessStatus:200,
 }
 app.use(cors(corsOptions)) 
+
+app.get('/muzar', (req, res) => {
+    res.send("hello ths is nave!! 🐱‍👤");
+})
+
 async function connect(){
     try{
         await mongoose.connect(uri);
