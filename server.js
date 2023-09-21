@@ -23,19 +23,11 @@ const corsOptions ={
 }
 app.use(cors(corsOptions)) 
 
-app.get('/muzar', (req, res) => {
-    res.send("hello ths is nave!! 🐱‍👤");
-})
-
 async function connect(){
     try{
         await mongoose.connect(uri);
-        // app.listen(3000,()=>{
-        //     console.log('server on port 8000')
-        // })
-        app.listen(process.env.PORT || 3000, () => {
-            console.log("chagned")
-            console.log(`Server running on port ${process.env.PORT || 3000}`);
+        app.listen(process.env.PORT || 8000, () => {
+            console.log(`Server running on port ${process.env.PORT || 8000}`);
         });
         console.log("Connected to mongoDB");
     }catch(e){
