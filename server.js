@@ -4,6 +4,7 @@ const emailRoute = require('./Routes/email')
 const sellsRoute = require('./Routes/sells')
 const manageRoute = require('./Routes/manage')
 const productsRoute = require('./Routes/products')
+const tagsRoute = require('./Routes/tags')
 var bodyParser = require('body-parser')
 
 const app = express();
@@ -11,6 +12,7 @@ app.use(emailRoute);
 app.use(productsRoute);
 app.use(sellsRoute);
 app.use(manageRoute);
+app.use(tagsRoute);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
