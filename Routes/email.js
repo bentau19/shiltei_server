@@ -21,14 +21,24 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-  
+router.post('/send-feedback',(req,res)=>{
+  console.log(req.body)
+  const{name,email,subject,content}=req.body;
+  transporter.sendMail({
+    from: 'shilteiHatzafon@gmail.com',
+    to:'bentau19@gmail.com',
+    subject:'contect about: '+subject,
+    text:'שלום שמי '+name+'\n התוכן: '+ content+'\n תוכל לחזור אלי למייל הנ"ל: '+email+'\n בתודה מראש \n '+name
+  }, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });}
+)  
+
   router.post('/send-mail',(req,res)=>{
-    // secretKey:"itIsMe!",
-    // _id:res.data._id,
-    // tradeNum:res.data.tradeNum,
-    // name:res.data.name,
-    // email:res.data.email,
-    console.log(req.body)
     const { _id,tradeNum,secretKey,name,email} = req.body.params;
     if(secretKey==="itIsMe!"){
     transporter.sendMail({
