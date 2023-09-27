@@ -31,8 +31,10 @@ router.post('/send-feedback',(req,res)=>{
     text:'שלום שמי '+name+'\n התוכן: '+ content+'\n תוכל לחזור אלי למייל הנ"ל: '+email+'\n בתודה מראש \n '+name
   }, function(error, info){
     if (error) {
-      console.log(error);
+      res.send(err);
+      console.log("error");
     } else {
+      res.send("success")
       console.log('Email sent: ' + info.response);
     }
   });}
