@@ -3,7 +3,6 @@ const Product = require('../models/product');
 const router = Router();
 global.pass = "I@3K>26st3HO>)&pq6`("
 const cors=require("cors");
-
 var bodyParser = require('body-parser')
 const corsOptions ={
    origin:'*', 
