@@ -13,8 +13,26 @@ const corsOptions ={
 router.use(cors(corsOptions))
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
+router.post('/get-products',(req,res)=>{
+    const query ={}
+    if (req.body.title!="") {
+        
+        query.title = { $regex: req.body.title, $options: "i"  };
+        }
+        if (req.body.tags!="All") {
+        query.tags = { $elemMatch: { $eq: req.body.tags } };
+        }
+    Product.find(query)
+    .skip(req.body.skip)  // Skip the first 4 items (0-based index)
+    .limit(req.body.limit)
+    .then((result)=>{
+        res.send(result);})
+        .catch((err)=>console.log(err))
+})
 router.post('/search-product-byTitle',(req,res)=>{
-    Product.find({ title: { $regex: req.body.params.title, $options: "i" } })
+    Product.find({ title: { $regex: req.body.title, $options: "i" } })
+    .skip(req.body.skip)  // Skip the first 4 items (0-based index)
+    .limit(req.body.limit)
     .then(docs => {
         res.send(docs)
     })
@@ -22,6 +40,9 @@ router.post('/search-product-byTitle',(req,res)=>{
         res.send(err);
     });
 })
+
+
+
 router.post('/search-product-byId',(req,res)=>{
     Product.findById(req.body.id)
     .then(docs => {
@@ -92,11 +113,6 @@ router.post('/delete-product',(req,res)=>{
         res.send("refresh the page!!")
     }}
 })
-router.post('/get-products',(req,res)=>{
-    Product.find()
-    .then((result)=>{
-        res.send(result);})
-        .catch((err)=>console.log(err))
-})
+
 
 module.exports = router;
