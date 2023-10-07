@@ -15,6 +15,7 @@ const productSchema = new Schema({
     },
     price:{type:Number},
     picture:{type:String},
+    description:{type:String},
     highlight:{
         type:Boolean,
         required:true

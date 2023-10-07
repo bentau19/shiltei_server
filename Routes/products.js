@@ -60,6 +60,7 @@ router.post('/add-product',(req,res)=>{
         size:req.body.params.size,
         price:req.body.params.price,
         picture:req.body.params.picture,
+        description:req.body.params.description,
         highlight:req.body.params.highlight,
         tags:req.body.params.tags,
         sellCount:0
@@ -78,7 +79,7 @@ router.post('/add-product',(req,res)=>{
 router.post('/update-product', async (req, res) => {
     try{
     if (req.body.params.pass === global.pass) {
-        const { _id, title, makat, size, price, picture, highlight, tags } = req.body.params;
+        const { _id, title, makat, size, price, picture, highlight, tags, description } = req.body.params;
         try {
             const updatedProduct = await Product.findByIdAndUpdate(_id, {
                 title,
@@ -86,6 +87,7 @@ router.post('/update-product', async (req, res) => {
                 size,
                 price,
                 picture,
+                description,
                 highlight,
                 tags
             });
