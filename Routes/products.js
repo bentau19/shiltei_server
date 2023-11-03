@@ -15,7 +15,6 @@ router.use(bodyParser.urlencoded({ extended: true }));
 router.post('/get-products',(req,res)=>{
     const query ={}
     if (req.body.title!="") {
-        
         query.title = { $regex: req.body.title, $options: "i"  };
         }
         if (req.body.tags!="All") {

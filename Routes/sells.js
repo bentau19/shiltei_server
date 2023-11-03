@@ -3,7 +3,8 @@ const Sell = require('../models/sell');
 const router = Router();
 const cors=require("cors");
 
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
+const Product = require('../models/product');
 const corsOptions ={
    origin:'*', 
    credentials:true,            //access-control-allow-credentials:true
@@ -64,6 +65,7 @@ router.post('/sell-search', async (req, res) => {
     }
   });
 router.post('/add-sell',(req,res)=>{
+    const items =req.body.params.items; 
     const sell = new Sell({
         items:req.body.params.items,
         totalPrice:req.body.params.totalPrice,
@@ -75,6 +77,22 @@ router.post('/add-sell',(req,res)=>{
         ip:req.body.params.ip});
         sell.save()
     .then((result)=>{
+        for (let i = 0; i < items.length; i++) {
+            Product.findOneAndUpdate(
+                { _id: items[i].id }, // Filter to identify the product by its ID
+                { $inc: { sellCount: 1 } }, // Use $inc to increment sellCount by 1
+                { new: true })// Set to true to return the updated document
+                .then(updatedProduct => {
+                    if (!updatedProduct) {
+                      console.error('Product not found');
+                    } else {
+                      console.log('Product updated:', updatedProduct);
+                    }
+                  })
+                  .catch(err => {
+                    console.error('Error updating product:', err);
+                  });
+        }
         res.send(result)
     }).catch((err)=>{
         console.log(err);
