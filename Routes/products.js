@@ -17,7 +17,7 @@ router.post('/get-products',(req,res)=>{
     if (req.body.title!="") {
         query.title = { $regex: req.body.title, $options: "i"  };
         }
-        if (req.body.tags!="All") {
+        if (req.body.tags!="הכל") {
         query.tags = { $elemMatch: { $eq: req.body.tags } };
         }
     Product.find(query)
