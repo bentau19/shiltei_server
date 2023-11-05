@@ -39,6 +39,24 @@ router.post('/send-feedback',(req,res)=>{
     }
   });}
 )  
+router.post('/send-update',(req,res)=>{
+  const { _id,tradeNum,secretKey,name,email,stage} = req.body;
+  if(secretKey==="itIsMe!"){
+  transporter.sendMail({
+    from: 'shilteiHatzafon@gmail.com',
+    to: email,
+    subject: 'המוצר שלך נמצא בשלב '+stage,
+    text:"שלום "+name+'\n המוצר שלך עבר כעת לשלב '+stage+' \n מצ"ב לינק לקבלה דיגיטלית! \n '+"https://shiltei.vercel.app/accaptance/"+_id+"/"+tradeNum+"\n המשך קניה מהנה ונשמח לראותך שוב!!"
+  }, function(error, info){
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });}else{
+      res.send("this is not you!!")
+    }
+})
 
   router.post('/send-mail',(req,res)=>{
     const { _id,tradeNum,secretKey,name,email} = req.body.params;
@@ -46,7 +64,7 @@ router.post('/send-feedback',(req,res)=>{
     transporter.sendMail({
       from: 'shilteiHatzafon@gmail.com',
       to: email,
-      subject:tradeNum + 'קבלה למספר עסקה ',
+      subject:'קבלה למספר עסקה '+tradeNum,
       text:"שלום "+name+'\n שמחים שרכשת אצלנו!!! \n מצ"ב לינק לקבלה דיגיטלית! \n '+"https://shiltei.vercel.app/accaptance/"+_id+"/"+tradeNum+"\n המשך קניה מהנה ונשמח לראותך שוב!!"
     }, function(error, info){
         if (error) {
